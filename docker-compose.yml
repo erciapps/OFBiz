@@ -6,7 +6,7 @@ services:
     container_name: ofbiz
     ports:
       - "8088:8080"
-      - "7443:8443"
+      - "8443:8443"
     restart: unless-stopped
     volumes:
       - ofbiz-data:/opt/ofbiz-framework/runtime
