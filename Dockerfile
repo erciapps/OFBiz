@@ -10,10 +10,13 @@ RUN git clone https://github.com/apache/ofbiz-framework.git ofbiz-framework
 
 WORKDIR /opt/ofbiz-framework
 
-# Descargar dependencias (sin compilar todo)
+# Descargar dependencias
 RUN ./gradlew --no-daemon dependencies
 
-EXPOSE 8080 8443
+# Cargar datos de semilla en la build
+RUN ./gradlew "ofbiz --load-data readers=seed,seed-initial,ext" || true
 
-# Ejecutar OFBiz cargando datos demo al arrancar
-CMD ["./gradlew", "ofbiz", "--", "--load-data", "readers=seed,seed-initial,ext"]
+EXPOSE 8088 8443
+
+# Al arrancar, solo levanta OFBiz
+CMD ["./gradlew", "ofbiz"]
