@@ -1,19 +1,19 @@
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:17-jdk   # usar JDK 17
 
 # Dependencias necesarias
-RUN apt-get update && apt-get install -y git gradle && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
-# Descargar Apache OFBiz
 WORKDIR /opt
-RUN git clone https://github.com/apache/ofbiz-framework.git ofbiz
 
-WORKDIR /opt/ofbiz
+# Clonar el código
+RUN git clone https://github.com/apache/ofbiz-framework.git ofbiz-framework
 
-# Descargar dependencias sin ejecutar tareas que requieren la DB
+WORKDIR /opt/ofbiz-framework
+
+# Descargar dependencias (sin compilar todo)
 RUN ./gradlew --no-daemon dependencies
 
-# Exponer puertos de OFBiz
-EXPOSE 8080 8443
+EXPOSE 8087 8443
 
-# Ejecutar OFBiz cargando datos de demo en el arranque
+# Al arrancar: carga datos demo y luego arranca OFBiz
 CMD ["./gradlew", "ofbiz", "--load-data", "readers=seed,seed-initial,ext"]
