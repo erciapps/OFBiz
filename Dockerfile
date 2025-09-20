@@ -13,7 +13,7 @@ WORKDIR /opt/ofbiz-framework
 # Descargar dependencias (sin compilar todo)
 RUN ./gradlew --no-daemon dependencies
 
-EXPOSE 8087 8443
+EXPOSE 8080 8443
 
-# Al arrancar: carga datos demo y luego arranca OFBiz
-CMD ["./gradlew", "ofbiz", "--load-data", "readers=seed,seed-initial,ext"]
+# Ejecutar OFBiz cargando datos demo al arrancar
+CMD ["./gradlew", "ofbiz", "--", "--load-data", "readers=seed,seed-initial,ext"]
