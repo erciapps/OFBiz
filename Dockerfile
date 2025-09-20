@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk
 
 # Dependencias necesarias
 RUN apt-get update && apt-get install -y git gradle && rm -rf /var/lib/apt/lists/*
@@ -15,5 +15,5 @@ RUN ./gradlew --no-daemon dependencies
 # Exponer puertos de OFBiz
 EXPOSE 8080 8443
 
-# Entrypoint: primero carga datos de demo y luego arranca
-CMD ./gradlew "ofbiz --load-data readers=seed,seed-initial,ext"
+# Ejecutar OFBiz cargando datos de demo en el arranque
+CMD ["./gradlew", "ofbiz", "--load-data", "readers=seed,seed-initial,ext"]
