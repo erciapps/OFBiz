@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk-slim
+FROM openjdk:17-jdk-slim
 
 # Dependencias necesarias
 RUN apt-get update && apt-get install -y git gradle && rm -rf /var/lib/apt/lists/*
@@ -9,11 +9,11 @@ RUN git clone https://github.com/apache/ofbiz-framework.git ofbiz
 
 WORKDIR /opt/ofbiz
 
-# Descargar dependencias (no ejecutamos loadAll aquí)
+# Descargar dependencias sin ejecutar tareas que requieren la DB
 RUN ./gradlew --no-daemon dependencies
 
-# Exponer puertos
-EXPOSE 8088 7443
+# Exponer puertos de OFBiz
+EXPOSE 8080 8443
 
-# Ejecutar OFBiz cargando datos al arrancar
-CMD ["./gradlew", "ofbiz", "loadAll"]
+# Entrypoint: primero carga datos de demo y luego arranca
+CMD ./gradlew "ofbiz --load-data readers=seed,seed-initial,ext"
