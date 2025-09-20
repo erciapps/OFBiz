@@ -5,12 +5,12 @@ services:
     build: .
     container_name: ofbiz
     ports:
-      - "8088:8080"   # HTTP
-      - "7443:8443"   # HTTPS
+      - "8087:8080"
+      - "7443:8443"
     restart: unless-stopped
     volumes:
-      - ofbiz-data:/opt/ofbiz/runtime
-      - ofbiz-logs:/opt/ofbiz/logs
+      - ofbiz-data:/opt/ofbiz-framework/runtime
+      - ofbiz-logs:/opt/ofbiz-framework/logs
 
 volumes:
   ofbiz-data:
