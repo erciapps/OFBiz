@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jdk   # usar JDK 17
+FROM eclipse-temurin:17-jdk
 
 # Dependencias necesarias
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
