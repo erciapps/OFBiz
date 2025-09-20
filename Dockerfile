@@ -13,7 +13,7 @@ WORKDIR /opt/ofbiz
 RUN ./gradlew --no-daemon dependencies
 
 # Exponer puertos
-EXPOSE 8080 8443
+EXPOSE 8088 7443
 
 # Ejecutar OFBiz cargando datos al arrancar
 CMD ["./gradlew", "ofbiz", "loadAll"]
